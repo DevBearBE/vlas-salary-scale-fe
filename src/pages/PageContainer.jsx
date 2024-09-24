@@ -7,7 +7,7 @@ import {
   calculateRSZ,
   formatSalaryData,
 } from "../utils/helpers";
-import { Salaries, Steps } from "../components";
+import { SalariesSelect, Steps } from "../components";
 
 export const PageContainer = () => {
   const { showBoundary } = useErrorBoundary();
@@ -28,7 +28,7 @@ export const PageContainer = () => {
       const sheet = wb.Sheets[wb.SheetNames[0]];
       const jsonData = XLSX.utils.sheet_to_json(sheet);
 
-      if (jsonData.length === 0) throw new Error("Geen data");
+      if (jsonData.length === 0) throw new Error("Geen data opgeladen");
 
       setSalaries(formatSalaryData(jsonData));
     } catch (error) {
@@ -54,43 +54,73 @@ export const PageContainer = () => {
     const selected = selectedSalaryScale.steps.find(
       (step) => step.trap === trap
     );
-    const indexed = calculateIndexedSalary(selected.loon);
-    const rsz = calculateRSZ(indexed);
-    const tax = calculatePayrollTax(indexed);
 
     setSelectedStep(selected);
-    setIndexedSalary(indexed);
-    setSocialContribution(rsz);
-    setPayrollTax(tax);
+
+    try {
+      const indexed = calculateIndexedSalary(selected.loon);
+      const rsz = calculateRSZ(indexed);
+      const tax = calculatePayrollTax(indexed);
+
+      setIndexedSalary(indexed);
+      setSocialContribution(rsz);
+      setPayrollTax(tax);
+    } catch (error) {
+      showBoundary(error);
+    }
+
     setIsStepSelected(true);
   };
 
   return (
     <>
-      <h1>Loonschalen</h1>
-      <Salaries
-        handleSelectChange={handleSelectSalaryScaleChange}
-        salaries={salaries}
-      />
-
-      {isSalaryScaleSelected && (
-        <>
-          <Steps
-            handleSelectStep={handleSelectStep}
-            selectedSalaryScale={selectedSalaryScale}
+      <div className="container p-12 mx-auto my-24">
+        <h1 className="p-4 text-2xl font-bold text-center bg-amber-400">
+          Loonschalen
+        </h1>
+        <div className="px-2 py-4 bg-zinc-300 min-h-96">
+          <SalariesSelect
+            handleSelectChange={handleSelectSalaryScaleChange}
+            salaries={salaries}
           />
-        </>
-      )}
 
-      {isStepSelected && (
-        <>
-          <p>Waarden voor trap {selectedStep.trap}</p>
-          <p>Jaarbasis: {selectedStep.loon} EUR</p>
-          <p>Geïndexeerde jaarbasis: {indexedSalary.toFixed(2)} EUR</p>
-          <p>RSZ: {socialContribution.toFixed(2)} EUR</p>
-          <p>Bedrijfsvoorheffing: {payrollTax.toFixed(2)} EUR</p>
-        </>
-      )}
+          {isSalaryScaleSelected && (
+            <>
+              <div className="mt-4">
+                <Steps
+                  handleSelectStep={handleSelectStep}
+                  selectedSalaryScale={selectedSalaryScale}
+                />
+              </div>
+              <hr className="my-4" />
+            </>
+          )}
+
+          {isStepSelected && (
+            <>
+              <h3 className="mb-3 text-xl font-bold">
+                Waarden voor trap {selectedStep.trap}
+              </h3>
+              <div className="grid grid-cols-3 gap-2 mb-1">
+                <p className="col-span-2 font-bold">Jaarbasis:</p>
+                <p>{selectedStep.loon} EUR</p>
+              </div>
+              <div className="grid grid-cols-3 gap-2 mb-1">
+                <p className="col-span-2 font-bold">Geïndexeerde jaarbasis:</p>{" "}
+                <p>{indexedSalary.toFixed(2)} EUR</p>
+              </div>
+              <div className="grid grid-cols-3 gap-2 mb-1">
+                <p className="col-span-2 font-bold">RSZ:</p>
+                <p>{socialContribution.toFixed(2)} EUR</p>
+              </div>
+              <div className="grid grid-cols-3 gap-2 mb-1">
+                <p className="col-span-2 font-bold">Bedrijfsvoorheffing:</p>
+                <p>{payrollTax.toFixed(2)} EUR</p>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
     </>
   );
 };

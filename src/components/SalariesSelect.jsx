@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 
-export const Salaries = ({ handleSelectChange, salaries }) => (
+export const SalariesSelect = ({ handleSelectChange, salaries }) => (
   <>
     <form>
-      <select onChange={handleSelectChange}>
+      <select className="px-4 py-2 bg-zinc-100" onChange={handleSelectChange}>
         <option value="">-Kies een loonschaal-</option>
         {salaries.length !== 0 &&
           salaries.map((salary, index) => (
@@ -16,7 +16,7 @@ export const Salaries = ({ handleSelectChange, salaries }) => (
   </>
 );
 
-Salaries.propTypes = {
+SalariesSelect.propTypes = {
   handleSelectChange: PropTypes.func.isRequired,
   salaries: PropTypes.array.isRequired,
 };

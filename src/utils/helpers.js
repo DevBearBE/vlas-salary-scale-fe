@@ -28,21 +28,27 @@ export const formatSalaryData = (salaryScales) => {
 
 export const calculateIndexedSalary = (salary) => {
   if (typeof salary !== "number")
-    throw new Error("Het type van het ingevoerde salaris is geen nummer");
+    throw new Error(
+      "Geïndexeerd salaris - Het type van het ingevoerde salaris is geen nummer"
+    );
 
   return (salary += (salary * INDEX) / 100);
 };
 
 export const calculateRSZ = (indexedSalary) => {
   if (typeof indexedSalary !== "number")
-    throw new Error("Het type van het geïndexeerde salaris is geen nummer");
+    throw new Error(
+      "RSZ - Het type van het geïndexeerde salaris is geen nummer"
+    );
 
   return ((indexedSalary / 12) * RSZ) / 100;
 };
 
 export const calculatePayrollTax = (indexedSalary) => {
   if (typeof indexedSalary !== "number")
-    throw new Error("Het type van het ingevoerde salaris is geen nummer");
+    throw new Error(
+      "PayrollTax - Het type van het ingevoerde salaris is geen nummer"
+    );
 
   return ((indexedSalary / 12) * PAYROLL_TAX) / 100;
 };
