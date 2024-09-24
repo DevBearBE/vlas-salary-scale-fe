@@ -2,24 +2,22 @@ const INDEX = 2.0807;
 const RSZ = 13.07;
 const PAYROLL_TAX = 33;
 
+const checkNumber = (value, errorMessage) => {
+  if (typeof value !== "number") throw new Error(errorMessage);
+};
+
 export const formatSalaryData = (salaryScales) => {
-  let formattedSalaryScale = [];
+  const formattedSalaryScale = [];
 
   for (const salaryScale of salaryScales) {
     const { naam, trap, loon } = salaryScale;
 
-    if (
-      formattedSalaryScale.length === 0 ||
-      formattedSalaryScale.every((scale) => scale.naam !== naam)
-    ) {
-      formattedSalaryScale = [
-        ...formattedSalaryScale,
-        { naam, steps: [{ trap, loon }] },
-      ];
-    } else {
-      const entry = formattedSalaryScale.find((scale) => scale.naam === naam);
+    const entry = formattedSalaryScale.find((scale) => scale.naam === naam);
 
-      entry.steps = [...entry.steps, { trap, loon }];
+    if (!entry) {
+      formattedSalaryScale.push({ naam, steps: [{ trap, loon }] });
+    } else {
+      entry.steps.push({ trap, loon });
     }
   }
 
@@ -27,28 +25,25 @@ export const formatSalaryData = (salaryScales) => {
 };
 
 export const calculateIndexedSalary = (salary) => {
-  if (typeof salary !== "number")
-    throw new Error(
-      "Geïndexeerd salaris - Het type van het ingevoerde salaris is geen nummer"
-    );
+  checkNumber(
+    salary,
+    "Geïndexeerd salaris - Het ingevoerde salaris is geen nummer"
+  );
 
   return (salary += (salary * INDEX) / 100);
 };
 
 export const calculateRSZ = (indexedSalary) => {
-  if (typeof indexedSalary !== "number")
-    throw new Error(
-      "RSZ - Het type van het geïndexeerde salaris is geen nummer"
-    );
+  checkNumber(indexedSalary, "RSZ - Het ingevoerde salaris is geen nummer");
 
   return ((indexedSalary / 12) * RSZ) / 100;
 };
 
 export const calculatePayrollTax = (indexedSalary) => {
-  if (typeof indexedSalary !== "number")
-    throw new Error(
-      "PayrollTax - Het type van het ingevoerde salaris is geen nummer"
-    );
+  checkNumber(
+    indexedSalary,
+    "PayrollTax - Het ingevoerde salaris is geen nummer"
+  );
 
   return ((indexedSalary / 12) * PAYROLL_TAX) / 100;
 };
