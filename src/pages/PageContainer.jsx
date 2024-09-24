@@ -6,8 +6,9 @@ import {
   calculatePayrollTax,
   calculateRSZ,
   formatSalaryData,
+  readXlsxFile,
 } from "../utils/helpers";
-import { SalariesSelect, Steps } from "../components";
+import { SalariesSelect, Steps, Value } from "../components";
 
 export const PageContainer = () => {
   const { showBoundary } = useErrorBoundary();
@@ -22,15 +23,8 @@ export const PageContainer = () => {
 
   const fetchSalaryData = useCallback(async () => {
     try {
-      const res = await fetch("./jaarbasis.xlsx");
-      const workbookData = await res.arrayBuffer();
-      const wb = XLSX.read(workbookData, { type: "array" });
-      const sheet = wb.Sheets[wb.SheetNames[0]];
-      const jsonData = XLSX.utils.sheet_to_json(sheet);
-
-      if (jsonData.length === 0) throw new Error("Geen data opgeladen");
-
-      setSalaries(formatSalaryData(jsonData));
+      const xlsxData = await readXlsxFile();
+      setSalaries(formatSalaryData(xlsxData));
     } catch (error) {
       showBoundary(error);
     }
@@ -101,22 +95,10 @@ export const PageContainer = () => {
               <h3 className="mb-3 text-xl font-bold">
                 Waarden voor trap {selectedStep.trap}
               </h3>
-              <div className="grid grid-cols-3 gap-2 mb-1">
-                <p className="col-span-2 font-bold">Jaarbasis:</p>
-                <p>{selectedStep.loon} EUR</p>
-              </div>
-              <div className="grid grid-cols-3 gap-2 mb-1">
-                <p className="col-span-2 font-bold">Geïndexeerde jaarbasis:</p>{" "}
-                <p>{indexedSalary.toFixed(2)} EUR</p>
-              </div>
-              <div className="grid grid-cols-3 gap-2 mb-1">
-                <p className="col-span-2 font-bold">RSZ:</p>
-                <p>{socialContribution.toFixed(2)} EUR</p>
-              </div>
-              <div className="grid grid-cols-3 gap-2 mb-1">
-                <p className="col-span-2 font-bold">Bedrijfsvoorheffing:</p>
-                <p>{payrollTax.toFixed(2)} EUR</p>
-              </div>
+              <Value label={"Jaarbasis"} value={selectedStep.loon} />
+              <Value label={"Geïndexeerde jaarbasis"} value={indexedSalary} />
+              <Value label={"RSZ"} value={socialContribution} />
+              <Value label={"Bedrijfsvoorheffing"} value={payrollTax} />
             </>
           )}
         </div>

@@ -1,9 +1,23 @@
+import * as XLSX from "xlsx";
+
 const INDEX = 2.0807;
 const RSZ = 13.07;
 const PAYROLL_TAX = 33;
 
 const checkNumber = (value, errorMessage) => {
   if (typeof value !== "number") throw new Error(errorMessage);
+};
+
+export const readXlsxFile = async () => {
+  const res = await fetch("./jaarbasis.xlsx");
+  const workbookData = await res.arrayBuffer();
+  const wb = XLSX.read(workbookData, { type: "array" });
+  const sheet = wb.Sheets[wb.SheetNames[0]];
+  const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+  if (jsonData.length === 0) throw new Error("Geen data opgeladen");
+
+  return jsonData;
 };
 
 export const formatSalaryData = (salaryScales) => {
