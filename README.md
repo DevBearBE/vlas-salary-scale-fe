@@ -44,5 +44,5 @@ _Project opzetten en draaien app_
   Aanvullende package die wordt gebruikt om de aangeleverde data voor de opdracht uit te lezen en om te zetten naar JSON format
 - Tailwind  
   Een CSS framework dat gebruik maakt van utility classes om een design te implementeren
-- Jest
+- Jest  
   Het testing framework dat wordt gebruikt om geschreven code te valideren.
