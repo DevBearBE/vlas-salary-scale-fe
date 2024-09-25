@@ -33,7 +33,8 @@ _Project opzetten en draaien app_
 3. Open de project folder in VS Code en open vervolgens een terminal venster.
    **Mac / Linux** Voer het commando `nvm use` uit. De juiste Node versie zal dan geïnstalleerd en gebruikt worden adhv de `.nvmrc` file in de root van het project.
 4. Voer `npm install` uit
-5. Om de applicatie lokaal te laten draaien, voer je `npm run dev` uit
+5. Om de applicatie lokaal te laten draaien, voer je `npm run dev` uit.
+6. De helper functies worden ook getest dmv het Jest framework. Om de testen uit te laten voeren, voer je het commando `npm run test` uit.
 
 ### Beschrijving van gebruikte externe libraries of frameworks
 
@@ -43,3 +44,5 @@ _Project opzetten en draaien app_
   Aanvullende package die wordt gebruikt om de aangeleverde data voor de opdracht uit te lezen en om te zetten naar JSON format
 - Tailwind  
   Een CSS framework dat gebruik maakt van utility classes om een design te implementeren
+- Jest
+  Het testing framework dat wordt gebruikt om geschreven code te valideren.
