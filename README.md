@@ -1,8 +1,19 @@
 # Opdracht Vlaamse Overheid
 
-### Overzicht applicatie-architectuur
-
 ### Uitleg modules en componenten
+
+|-public
+|-src
+| |-components
+| |-pages
+| |-utils
+
+In de `public` folder kan je de data file terugvinden in xlsx format.  
+Onder de `src` folder kan je de opbouw van de applicatie vinden:
+
+- In de `components` folder staan de stateless componenten die gebruikt worden om presentational logic te groeperen.
+- In de `pages` folder staat de stateful component waar de data centraal wordt bijgehouden en waar de app wordt aangestuurd.
+- In de `utils` folder staan de helper functies die instaan voor het ophalen van de data, het formatteren en de berekeningen.
 
 ### Instructies opzetten en draaien applicatie
 
