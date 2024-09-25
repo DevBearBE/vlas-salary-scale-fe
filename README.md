@@ -2,11 +2,11 @@
 
 ### Uitleg modules en componenten
 
-|-public
-|-src
-| |-components
-| |-pages
-| |-utils
+|-public  
+|-src  
+| |-components  
+| |-pages  
+| |-utils  
 
 In de `public` folder kan je de data file terugvinden in xlsx format.  
 Onder de `src` folder kan je de opbouw van de applicatie vinden:
