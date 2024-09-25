@@ -8,11 +8,11 @@
 
 _Voorafgaand_
 
-- Code Editor
+- Code Editor  
   Download en gebruik een code editor zoals [VS Code](https://code.visualstudio.com/)
 
-- Node versie
-  **Windows** Zorg er voor dat de juiste Node versie geïnstalleerd is. `v20.17.0`
+- Node versie  
+  **Windows** Zorg er voor dat de juiste [Node](https://nodejs.org/en) versie geïnstalleerd is. `v20.17.0`  
   **Mac / Linux** Gebruik een Node Versie Manager zoals [nvm](https://github.com/nvm-sh/nvm). Open de project folder in VS Code en open vervolgens een terminal venster. Voer het commando `nvm use` uit. De juiste Node versie zal dan geïnstalleerd en gebruikt worden adhv de `.nvmrc` file in de root van het project.
 
 _Project opzetten en draaien app_
